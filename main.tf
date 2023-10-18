@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("./itisv-401212-d51ce4e7851a")
+  credentials = file("./itisv-401212-d51ce4e7851a.json")
   project     = var.project_id
 }
 
