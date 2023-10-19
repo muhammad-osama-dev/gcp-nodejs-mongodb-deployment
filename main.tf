@@ -23,4 +23,10 @@ module "compute" {
     labels_tags = var.labels_tags
     vpc_name = module.network.vpc_name
     private_subnet_name = module.network.private_subnet_name
+    sa_email = module.iam.sa_email
+}
+
+module "iam" {
+  source = "./iam"
+  project_id = var.project_id
 }

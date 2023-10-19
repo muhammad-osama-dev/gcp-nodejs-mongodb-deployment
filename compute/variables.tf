@@ -27,3 +27,7 @@ variable "vpc_name" {
 variable "private_subnet_name" {
   type = string
 }
+
+variable "sa_email" {
+  type = string
+}
