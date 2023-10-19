@@ -1,2 +1,4 @@
 *.terraform*
+terraform.tfstate
+terraform.tfstate.backup
 itisv-401212-d51ce4e7851a.json
