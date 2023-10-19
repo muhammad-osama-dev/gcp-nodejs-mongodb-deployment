@@ -18,11 +18,14 @@ resource "google_compute_instance" "my-private-vm" {
     
   }
 
-  metadata_startup_script = "echo hi > /test.txt"
+  # metadata = {
+  #   startup_script = "./startup-private-vm.sh"
+  # }
+  metadata_startup_script = file("./compute/startup-private-vm.sh")
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = var.sa_email
+    email  = "admin-sdk@itisv-401212.iam.gserviceaccount.com"
     scopes = ["cloud-platform"]
   }
 }
