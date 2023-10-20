@@ -15,6 +15,7 @@ sudo apt-get update
 
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
+# gcloud auth configure-docker -y
 
 
 sudo apt-get install git-all
@@ -42,8 +43,8 @@ EXPOSE 8080
 CMD [ "node", "index.js" ]
 EOF
 
-# sudo docker build -t us-east1-docker.pkg.dev/itisv-401212/test/app:latest .
-# sudo docker push us-east1-docker.pkg.dev/itisv-401212/test/app:latest
+# sudo docker build -t us-docker.pkg.dev/itisv-401212/private-vm-repo/app:latest .
+# sudo docker push us-docker.pkg.dev/itisv-401212/private-vm-repo/app:latest
 
 EOF
 

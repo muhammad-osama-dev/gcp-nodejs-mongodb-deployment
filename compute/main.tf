@@ -21,11 +21,18 @@ resource "google_compute_instance" "my-private-vm" {
   # metadata = {
   #   startup_script = "./startup-private-vm.sh"
   # }
+
+   metadata = {
+
+    # Add metadata key to allow full access to all Cloud APIs
+    "enable-oslogin" = "TRUE"
+  }
+
   metadata_startup_script = file("./compute/startup-private-vm.sh")
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = "admin-sdk@itisv-401212.iam.gserviceaccount.com"
+    email  = var.sa_email
     scopes = ["cloud-platform"]
   }
 }

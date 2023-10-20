@@ -30,3 +30,12 @@ module "iam" {
   source = "./iam"
   project_id = var.project_id
 }
+
+module "storage" {
+  source = "./storage"
+  region2 = var.region2
+  repo_desc = var.repo_desc
+  repo_id = var.repo_id
+  sa_email = module.iam.sa_email
+  project_id = var.project_id
+}

@@ -51,3 +51,16 @@ variable "labels_tags" {
     type = list(string)
 }
 
+
+
+# Storge
+
+
+variable "repo_id" {
+  type = string 
+}
+
+variable "repo_desc" {
+  type = string
+  default = "docker repository"
+}

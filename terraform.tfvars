@@ -13,3 +13,10 @@ vm_type = "e2-micro"
 vm_zone = "us-east1-b"
 vm_image = "debian-cloud/debian-10"
 labels_tags = [ "private-subnet" ]
+
+
+
+# Storage
+
+repo_id = "private-vm-repo"
+repo_desc = "repo for the private vm"
