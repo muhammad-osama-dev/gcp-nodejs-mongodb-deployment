@@ -7,9 +7,9 @@ resource "google_compute_network" "vpc" {
 }
 
 # Subnets
-resource"google_compute_subnetwork" "public" {
-    name="${var.vpc_name}-public-subnetwork"
-    ip_cidr_range= var.public_ip_cidr_range
+resource"google_compute_subnetwork" "gke_subnet" {
+    name="${var.vpc_name}-gke-subnetwork"
+    ip_cidr_range= var.gke_ip_cidr_range
     region=var.region1
     network=google_compute_network.vpc.id
     private_ip_google_access =true
@@ -24,7 +24,7 @@ resource"google_compute_subnetwork" "private" {
 }
 
 
-# NAT ROUTER
+# NAT ROUTER for private subnet
 resource "google_compute_router" "nat-router" {
   name    = "${var.vpc_name}-private-router"
   region  = google_compute_subnetwork.private.region
@@ -45,3 +45,43 @@ resource "google_compute_router_nat" "nat" {
 
 
 
+# NAT ROUTER for gke subnet
+resource "google_compute_router" "gke-nat-router" {
+  name    = "${var.vpc_name}-gke-router"
+  region  = google_compute_subnetwork.gke_subnet.region
+  network = google_compute_network.vpc.id
+}
+
+resource "google_compute_router_nat" "nat-gke" {
+  name                               = "${var.vpc_name}-private-router-nat"
+  router                             = google_compute_router.gke-nat-router.name
+  region                             = google_compute_router.gke-nat-router.region
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+  subnetwork {
+    name                             = "${var.vpc_name}-gke-subnetwork"
+    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+  }
+}
+
+
+
+# NAT ROUTER for gke
+
+# resource "google_compute_router" "nat-router-gke" {
+#   name    = "${var.vpc_name}-gke-router"
+#   region  = google_compute_subnetwork.gke_subnet.region
+#   network = google_compute_network.vpc.id
+# }
+
+# resource "google_compute_router_nat" "nat" {
+#   name                               = "${var.vpc_name}-private-router-nat"
+#   router                             = google_compute_router.nat-router-gke.name
+#   region                             = google_compute_router.nat-router-gke.region
+#   nat_ip_allocate_option             = "AUTO_ONLY"
+#   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+#   subnetwork {
+#     name                             = "${var.vpc_name}-gke-subnetwork"
+#     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+#   }
+# }

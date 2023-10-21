@@ -28,6 +28,23 @@ variable "private_subnet_name" {
   type = string
 }
 
+variable "gke_subnet_name" {
+  type = string 
+}
+
 variable "sa_email" {
+  type = string
+}
+
+
+
+
+### GKE
+
+variable "gke_name" {
+  type = string
+}
+
+variable "region1" {
   type = string
 }

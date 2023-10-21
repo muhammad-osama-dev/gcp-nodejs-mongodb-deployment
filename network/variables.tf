@@ -14,7 +14,7 @@ variable "vpc_name" {
   type = string
 }
 
-variable "public_ip_cidr_range" {
+variable "gke_ip_cidr_range" {
     type = string
     description="List of The range of internal addresses that are owned by this subnetwork."
 }

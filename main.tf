@@ -9,7 +9,7 @@ module "network" {
     region1 = var.region1
     region2 = var.region2
     vpc_name = var.vpc_name
-    public_ip_cidr_range = var.public_ip_cidr_range
+    gke_ip_cidr_range = var.gke_ip_cidr_range
     private_ip_cidr_range = var.private_ip_cidr_range
 }
 
@@ -23,7 +23,10 @@ module "compute" {
     labels_tags = var.labels_tags
     vpc_name = module.network.vpc_name
     private_subnet_name = module.network.private_subnet_name
+    gke_subnet_name = module.network.gke_subnet_name
     sa_email = module.iam.sa_email
+    gke_name = var.gke_name
+    region1 = var.region1
 }
 
 module "iam" {
