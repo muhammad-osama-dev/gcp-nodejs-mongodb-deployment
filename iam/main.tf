@@ -10,9 +10,9 @@ resource "google_service_account" "sa" {
 # }
 
 
+resource "google_project_iam_member" "k8s_admin" {
+  project = var.project_id
+  role    = "roles/container.admin"  # This grants full control of Kubernetes Engine resources
+  member  = "serviceAccount:${google_service_account.sa.email}"
+}
 
-# resource "google_project_iam_member" "service_account_editor" {
-#   project = var.project_id
-#   role    = "roles/editor"  # Role for granting full access to most Google Cloud resources
-#   member  = "serviceAccount:${google_service_account.sa.email}"
-# }

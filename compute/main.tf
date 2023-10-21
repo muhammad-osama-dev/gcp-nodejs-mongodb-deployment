@@ -4,7 +4,7 @@ resource "google_compute_instance" "my-private-vm" {
   zone         = var.vm_zone
 
   tags = var.labels_tags
-
+  depends_on = [ google_container_node_pool.privatecluster-node-pool ]
   boot_disk {
      initialize_params {
       image = var.vm_image
@@ -47,6 +47,12 @@ resource "google_compute_instance" "my-private-vm" {
 resource "google_service_account" "kubernetes" {
   account_id = "kubernetes"
 }
+
+resource "google_project_iam_member" "artifact_registry_reader" {
+  project = "itisv-401212"
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${google_service_account.kubernetes.email}"
+}
 resource "google_container_cluster" "privatecluster"{
   name     = var.gke_name
   network = var.vpc_name
@@ -62,7 +68,7 @@ resource "google_container_cluster" "privatecluster"{
   node_locations = [
     "${var.region1}-a",
     "${var.region1}-b",
-    # "${var.region1}-c"
+    "${var.region1}-c"
   ]
   # master_authorized_networks_config {
   #   cidr_blocks {
@@ -77,20 +83,32 @@ resource "google_container_cluster" "privatecluster"{
   }
    ip_allocation_policy {
   }
+  node_config {
+    preemptible  = true
+    machine_type = "e2-small"
+    disk_type    = "pd-balanced"
+    # disk_type    = var.workern_disktype
+    disk_size_gb = 10
+    # image_type   = var.workern_imagetype
+    service_account = google_service_account.kubernetes.email
+    oauth_scopes    = [ 
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
 }
 
 resource "google_container_node_pool" "privatecluster-node-pool" {
   name       = "node-pool"
   cluster    = google_container_cluster.privatecluster.name
-  node_count = 1
+  node_count = 3
   location   = "us-central1"  
  
   node_config {
     preemptible  = true
     machine_type = "e2-small"
-    disk_type    = "pd-standard"
+    disk_type    = "pd-balanced"
     # disk_type    = var.workern_disktype
-    # disk_size_gb = var.workern_disksize
+    disk_size_gb = 25
     # image_type   = var.workern_imagetype
     service_account = google_service_account.kubernetes.email
     oauth_scopes    = [ 
