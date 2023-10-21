@@ -67,8 +67,8 @@ resource "google_container_cluster" "privatecluster"{
 
   node_locations = [
     "${var.region1}-a",
-    "${var.region1}-b",
-    "${var.region1}-c"
+    "${var.region1}-b"
+    # "${var.region1}-c"
   ]
   # master_authorized_networks_config {
   #   cidr_blocks {
@@ -86,9 +86,9 @@ resource "google_container_cluster" "privatecluster"{
   node_config {
     preemptible  = true
     machine_type = "e2-small"
-    disk_type    = "pd-balanced"
+    disk_type    = "pd-standard"
     # disk_type    = var.workern_disktype
-    disk_size_gb = 10
+    # disk_size_gb = 10
     # image_type   = var.workern_imagetype
     service_account = google_service_account.kubernetes.email
     oauth_scopes    = [ 
@@ -106,9 +106,9 @@ resource "google_container_node_pool" "privatecluster-node-pool" {
   node_config {
     preemptible  = true
     machine_type = "e2-small"
-    disk_type    = "pd-balanced"
+    disk_type    = "pd-standard"
     # disk_type    = var.workern_disktype
-    disk_size_gb = 25
+    # disk_size_gb = 10
     # image_type   = var.workern_imagetype
     service_account = google_service_account.kubernetes.email
     oauth_scopes    = [ 
