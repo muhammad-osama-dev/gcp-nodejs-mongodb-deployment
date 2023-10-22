@@ -19,11 +19,9 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 
 ######################### pulling application ##########################
 sudo apt-get install git-all
-git clone https://github.com/Mostafa-Yehia/simple-node-app.git
 
 # sudo apt install npm -y
 ##################### Dockeraizing Application ########################
-cd /simple-node-app
 # cat > Dockerfile <<EOF
 # # Use an official Node.js runtime as a parent image
 # FROM node:18
@@ -53,8 +51,7 @@ cat key.json | base64 -d > key1.json
 gcloud auth activate-service-account --key-file=key1.json
 yes | gcloud auth configure-docker us-east1-docker.pkg.dev 
 cat key.json | sudo docker login -u _json_key_base64 --password-stdin https://us-east1-docker.pkg.dev
-cd /simple-node-app
-
+cd /
 ################ App Image ###################
 echo "Pulling app image ..." >> tracker.txt
 sudo docker pull moelshafei/nodeapp:latest
@@ -79,8 +76,16 @@ echo "Image Pushed ..." >> tracker.txt
 cd /
 git clone https://muhammad-osama-dev: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@github.com/muhammad-osama-dev/gcp-nodejs-mongodb-deployment.git
 cd /gcp-nodejs-mongodb-deployment
-gcloud container clusters get-credentials gke-cluster --zone=us-central1
+sudo apt-get install kubectl
+echo "kubectl installed ..." >> tracker.txt
+sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+echo "google auth ..." >> tracker.txt
+export KUBECONFIG=$HOME/.kube/config
+gcloud container clusters get-credentials gke-cluster --zone=us-central1 > output.txt 2>&1
+echo "cluster auth ..." >> tracker.txt
 kubectl apply -f ./kubernetes/mongodb/
+echo "mongodb deployed ..." >> tracker.txt
 kubectl apply -f ./kubernetes/app_deployment/
+echo "app deployed ..." >> tracker.txt
 EOF
 
