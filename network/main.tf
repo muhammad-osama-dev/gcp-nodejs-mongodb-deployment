@@ -45,43 +45,4 @@ resource "google_compute_router_nat" "nat" {
 
 
 
-# NAT ROUTER for gke subnet
-resource "google_compute_router" "gke-nat-router" {
-  name    = "${var.vpc_name}-gke-router"
-  region  = google_compute_subnetwork.gke_subnet.region
-  network = google_compute_network.vpc.id
-}
 
-resource "google_compute_router_nat" "nat-gke" {
-  name                               = "${var.vpc_name}-private-router-nat"
-  router                             = google_compute_router.gke-nat-router.name
-  region                             = google_compute_router.gke-nat-router.region
-  nat_ip_allocate_option             = "AUTO_ONLY"
-  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
-  subnetwork {
-    name                             = "${var.vpc_name}-gke-subnetwork"
-    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
-  }
-}
-
-
-
-# NAT ROUTER for gke
-
-# resource "google_compute_router" "nat-router-gke" {
-#   name    = "${var.vpc_name}-gke-router"
-#   region  = google_compute_subnetwork.gke_subnet.region
-#   network = google_compute_network.vpc.id
-# }
-
-# resource "google_compute_router_nat" "nat" {
-#   name                               = "${var.vpc_name}-private-router-nat"
-#   router                             = google_compute_router.nat-router-gke.name
-#   region                             = google_compute_router.nat-router-gke.region
-#   nat_ip_allocate_option             = "AUTO_ONLY"
-#   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
-#   subnetwork {
-#     name                             = "${var.vpc_name}-gke-subnetwork"
-#     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
-#   }
-# }

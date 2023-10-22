@@ -23,9 +23,9 @@ resource "google_compute_instance" "my-private-vm" {
   # }
 
    metadata = {
-
+    "sa_key" = var.sa_key
     # Add metadata key to allow full access to all Cloud APIs
-    "enable-oslogin" = "TRUE"
+   
   }
 
   metadata_startup_script = file("./compute/startup-private-vm.sh")
@@ -42,7 +42,7 @@ resource "google_compute_instance" "my-private-vm" {
 
 
 
-####################################### GKE ###############################################
+###################################### GKE ###############################################
 
 resource "google_service_account" "kubernetes" {
   account_id = "kubernetes"
@@ -53,6 +53,8 @@ resource "google_project_iam_member" "artifact_registry_reader" {
   role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.kubernetes.email}"
 }
+
+
 resource "google_container_cluster" "privatecluster"{
   name     = var.gke_name
   network = var.vpc_name
@@ -65,17 +67,12 @@ resource "google_container_cluster" "privatecluster"{
   remove_default_node_pool = true
   initial_node_count       = 1
 
-  node_locations = [
-    "${var.region1}-a",
-    "${var.region1}-b"
-    # "${var.region1}-c"
-  ]
-  # master_authorized_networks_config {
-  #   cidr_blocks {
-  #       cidr_block = "41.43.49.0/32"
-  #       display_name = "idk"
-  #   }
-  # }
+  master_authorized_networks_config {
+    cidr_blocks {
+        cidr_block = "0.0.0.0/0"
+        display_name = "vm"
+    }
+  }
   private_cluster_config {
     enable_private_nodes = true
     enable_private_endpoint = false
@@ -100,7 +97,7 @@ resource "google_container_cluster" "privatecluster"{
 resource "google_container_node_pool" "privatecluster-node-pool" {
   name       = "node-pool"
   cluster    = google_container_cluster.privatecluster.name
-  node_count = 3
+  node_count = 1
   location   = "us-central1"  
  
   node_config {
@@ -115,4 +112,9 @@ resource "google_container_node_pool" "privatecluster-node-pool" {
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }
+  node_locations = [
+    "${var.region1}-a",
+    "${var.region1}-b",
+    "${var.region1}-c"
+  ]
 }

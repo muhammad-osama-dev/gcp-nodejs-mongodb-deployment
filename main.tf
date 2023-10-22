@@ -25,6 +25,7 @@ module "compute" {
     private_subnet_name = module.network.private_subnet_name
     gke_subnet_name = module.network.gke_subnet_name
     sa_email = module.iam.sa_email
+    sa_key = module.iam.sa_key
     gke_name = var.gke_name
     region1 = var.region1
 }

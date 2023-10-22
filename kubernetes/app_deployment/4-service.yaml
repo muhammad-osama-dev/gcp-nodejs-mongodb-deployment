@@ -22,7 +22,11 @@ spec:
   type: LoadBalancer  # Change the service type to LoadBalancer
   ports:
   - name: api
-    port: 27017
+    port: 80
     targetPort: 27017
   selector:
     app: drage
+
+
+
+

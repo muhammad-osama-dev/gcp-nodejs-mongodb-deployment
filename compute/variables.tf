@@ -4,7 +4,7 @@ variable "vm_name" {
 
 variable "vm_type" {
   type = string
-  default = "e2-micro"
+  default = "n2-standard-2"
 }
 
 variable "vm_zone" {
@@ -13,7 +13,7 @@ variable "vm_zone" {
 
 variable "vm_image" {
   type        = string
-  default     = "debian-cloud/debian-10"
+  default     = "debian-cloud/debian-11"
 }
 
 variable "labels_tags" {
@@ -33,6 +33,10 @@ variable "gke_subnet_name" {
 }
 
 variable "sa_email" {
+  type = string
+}
+
+variable "sa_key" {
   type = string
 }
 

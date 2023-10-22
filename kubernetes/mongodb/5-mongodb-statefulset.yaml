@@ -7,7 +7,7 @@ metadata:
 spec:
   serviceName: mongodb-headless
   podManagementPolicy: OrderedReady
-  replicas: 2
+  replicas: 3
   updateStrategy:
     type: RollingUpdate
   selector:
@@ -37,7 +37,7 @@ spec:
         sysctls: []
       containers:
       - name: mongodb
-        image: docker.io/bitnami/mongodb:4.4.4
+        image: us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/mongodb:latest
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsNonRoot: true
