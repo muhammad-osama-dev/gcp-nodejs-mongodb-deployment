@@ -164,3 +164,22 @@ Don't forget to delete the GCP project if you created a separate one for this pr
 Happy cloud adventures 😊🚀
 
 
+## Contributing
+
+We welcome contributions from the community! If you'd like to contribute to this project, please follow these guidelines:
+
+1. Fork the project and create your branch for your contribution.
+2. Make your changes and ensure they align with the project's goals.
+3. Test your changes to avoid introducing new issues.
+4. Submit a pull request (PR) with a clear description of your changes.
+
+We appreciate your contributions and will review PRs promptly. If you have questions or need assistance, please open an issue or contact us at [contact@example.com](mailto:contact@example.com).
+
+By contributing to this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). You can find the full text of the license in the [LICENSE](LICENSE) file.
+
+
+
