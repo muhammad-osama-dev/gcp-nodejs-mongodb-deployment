@@ -159,4 +159,6 @@ gcloud iam service-accounts delete SERVICE_ACCOUNT_EMAIL
 ```
 Don't forget to delete the GCP project if you created a separate one for this project.
 
+Happy cloud adventures 😊🚀
+
 
