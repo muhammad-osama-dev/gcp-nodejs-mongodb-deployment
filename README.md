@@ -57,6 +57,7 @@ Create a key for the service account
 ```bash
 gcloud iam service-accounts keys create KEY_FILE.json --iam-account SERVICE_ACCOUNT_EMAIL
 ```
+put your key path in the main.tf file in the cloud provider block 
 
 ### Terraform Modules
 
