@@ -34,7 +34,7 @@
 #       initContainers:
 #       containers:
 #       - name: mongodb-arbiter
-#         image: docker.io/bitnami/mongodb:4.4.4
+#         image: us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/mongodb:latest
 #         imagePullPolicy: IfNotPresent
 #         securityContext:
 #           runAsUser: 1001

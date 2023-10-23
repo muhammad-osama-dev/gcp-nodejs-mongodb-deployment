@@ -1,4 +1,4 @@
-project_id = "itisv-401212"
+project_id = "halogen-data-401020"
 region1 = "us-central1"
 region2 = "us-east1"
 vpc_name = "project"

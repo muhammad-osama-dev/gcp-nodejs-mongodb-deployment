@@ -25,7 +25,7 @@ spec:
     port: 80
     targetPort: 27017
   selector:
-    app: drage
+    app: nodeapp
 
 
 

@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: drage
+  name: nodeapp
   namespace: staging
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: drage
+      app: nodeapp
   template:
     metadata:
       labels:
-        app: drage
+        app: nodeapp
     spec:
       containers:
       - name: drage
-        image: us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/app
+        image: us-east1-docker.pkg.dev/halogen-data-401020/private-vm-repo/app:latest
         ports:
         - name: http
           containerPort: 5000

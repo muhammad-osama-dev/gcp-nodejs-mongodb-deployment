@@ -44,5 +44,19 @@ resource "google_compute_router_nat" "nat" {
 }
 
 
+# NAT ROUTER for gke subnet
+
+
+
+
+# NAT ROUTER for gke
+
+# resource "google_compute_router" "nat-router-gke" {
+#   name    = "${var.vpc_name}-gke-router"
+#   region  = google_compute_subnetwork.gke_subnet.region
+#   network = google_compute_network.vpc.id
+# }
+
+
 
 

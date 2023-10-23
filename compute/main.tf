@@ -8,6 +8,7 @@ resource "google_compute_instance" "my-private-vm" {
   boot_disk {
      initialize_params {
       image = var.vm_image
+      size = 10
     }
   }
 
@@ -49,7 +50,7 @@ resource "google_service_account" "kubernetes" {
 }
 
 resource "google_project_iam_member" "artifact_registry_reader" {
-  project = "itisv-401212"
+  project = "halogen-data-401020"
   role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.kubernetes.email}"
 }
@@ -85,7 +86,7 @@ resource "google_container_cluster" "privatecluster"{
     machine_type = "e2-small"
     disk_type    = "pd-standard"
     # disk_type    = var.workern_disktype
-    # disk_size_gb = 10
+    disk_size_gb = 15
     # image_type   = var.workern_imagetype
     service_account = google_service_account.kubernetes.email
     oauth_scopes    = [ 
@@ -105,7 +106,7 @@ resource "google_container_node_pool" "privatecluster-node-pool" {
     machine_type = "e2-small"
     disk_type    = "pd-standard"
     # disk_type    = var.workern_disktype
-    # disk_size_gb = 10
+    disk_size_gb = 15
     # image_type   = var.workern_imagetype
     service_account = google_service_account.kubernetes.email
     oauth_scopes    = [ 

@@ -15,10 +15,9 @@ echo \
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
-# gcloud auth configure-docker -y
 
 ######################### pulling application ##########################
-sudo apt-get install git-all
+# sudo apt-get install git-all
 
 # sudo apt install npm -y
 ##################### Dockeraizing Application ########################
@@ -56,36 +55,51 @@ cd /
 echo "Pulling app image ..." >> tracker.txt
 sudo docker pull moelshafei/nodeapp:latest
 echo "Image Pulled ..." >> tracker.txt
-sudo docker tag moelshafei/nodeapp:latest us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/app:latest
+sudo docker tag moelshafei/nodeapp:latest us-east1-docker.pkg.dev/halogen-data-401020/private-vm-repo/app:latest
 # sudo docker build -t us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/app:latest .
-sudo docker push us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/app:latest
+sudo docker push us-east1-docker.pkg.dev/halogen-data-401020/private-vm-repo/app:latest
 echo "Image Pushed" >> tracker.txt
 ############# MongoDB Image ####################
 echo "Pulling mognodb image ..." >> tracker.txt
 sudo docker pull bitnami/mongodb:4.4.4
 echo "Pulled mognodb image ..." >> tracker.txt
-sudo docker tag bitnami/mongodb:4.4.4 us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/mongodb:latest
+sudo docker tag bitnami/mongodb:4.4.4 us-east1-docker.pkg.dev/halogen-data-401020/private-vm-repo/mongodb:latest
 echo "Pushing mognodb image ..." >> tracker.txt
-sudo docker push us-east1-docker.pkg.dev/itisv-401212/private-vm-repo/mongodb:latest
+sudo docker push us-east1-docker.pkg.dev/halogen-data-401020/private-vm-repo/mongodb:latest
 echo "Image Pushed ..." >> tracker.txt
 
 
 
 
-############ cloning the kubernetes files ############
-cd /
-git clone https://muhammad-osama-dev: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@github.com/muhammad-osama-dev/gcp-nodejs-mongodb-deployment.git
-cd /gcp-nodejs-mongodb-deployment
+###### For proxy ################
 sudo apt-get install kubectl
 echo "kubectl installed ..." >> tracker.txt
 sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
 echo "google auth ..." >> tracker.txt
 export KUBECONFIG=$HOME/.kube/config
-gcloud container clusters get-credentials gke-cluster --zone=us-central1 > output.txt 2>&1
-echo "cluster auth ..." >> tracker.txt
-kubectl apply -f ./kubernetes/mongodb/
-echo "mongodb deployed ..." >> tracker.txt
-kubectl apply -f ./kubernetes/app_deployment/
-echo "app deployed ..." >> tracker.txt
+gcloud container clusters get-credentials gke-cluster --zone us-central1 --project halogen-data-401020 --internal-ip
+gcloud container clusters update gke-cluster --zone us-central1  --enable-master-global-access
+sudo apt install tinyproxy -y
+echo "tiny proxy installed ..." >> tracker.txt
+sudo sh -c "echo 'Allow localhost' >> /etc/tinyproxy/tinyproxy.conf"
+sudo service tinyproxy restart
+echo "service restarted auth ..." >> tracker.txt
+exit
+
+############ cloning the kubernetes files ############
+cd /
+# git clone https://muhammad-osama-dev:token@github.com/muhammad-osama-dev/gcp-nodejs-mongodb-deployment.git
+# cd /gcp-nodejs-mongodb-deployment
+# sudo apt-get install kubectl
+# echo "kubectl installed ..." >> tracker.txt
+# sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+# echo "google auth ..." >> tracker.txt
+# export KUBECONFIG=$HOME/.kube/config
+# gcloud container clusters get-credentials gke-cluster --zone=us-central1 > output.txt 2>&1
+# echo "cluster auth ..." >> tracker.txt
+# kubectl apply -f ./kubernetes/mongodb/
+# echo "mongodb deployed ..." >> tracker.txt
+# kubectl apply -f ./kubernetes/app_deployment/
+# echo "app deployed ..." >> tracker.txt
 EOF
 
