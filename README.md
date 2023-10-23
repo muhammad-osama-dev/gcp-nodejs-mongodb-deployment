@@ -175,7 +175,7 @@ We welcome contributions from the community! If you'd like to contribute to this
 
 We appreciate your contributions and will review PRs promptly. If you have questions or need assistance, please open an issue or contact us at [mohamedelshafei977@gmail.com](mailto:mohamedelshafei977@gmail.com).
 
-By contributing to this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 
 ## License
 
