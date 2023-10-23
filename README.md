@@ -10,6 +10,7 @@ This project demonstrates how to create a robust infrastructure on Google Cloud 
   - [Terraform Modules](#terraform-modules)
 - [Usage](#usage)
 - [Cleanup](#cleanup)
+- [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -162,6 +163,16 @@ gcloud iam service-accounts delete SERVICE_ACCOUNT_EMAIL
 Don't forget to delete the GCP project if you created a separate one for this project.
 
 Happy cloud adventures 😊🚀
+
+
+## Troubleshooting
+
+If you encounter any issues while setting up or using this project, check the following troubleshooting tips for common problems:
+
+- **Problem 1**: if you are facing a problem with the proxy you can uncomment the cloning the kubernetes files part in the startup-private-vm.sh script and have the vm do everything including applying the kubernetes manifest (Not practical in a real scenario) 
+
+If you can't resolve the issue using the troubleshooting tips, feel free to [me](mailto:mohamedelshafei977@gmail.com) for assistance.
+
 
 
 ## Contributing
