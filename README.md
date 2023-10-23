@@ -2,6 +2,8 @@
 
 This project demonstrates how to create a robust infrastructure on Google Cloud Platform using Terraform modules. The infrastructure includes IAM settings, a network setup, compute resources, and a MongoDB replica set, along with a Node.js web app that connects to the database. The web app is exposed using an ingress/load balancer. Here's a step-by-step guide on how to use this repository to set up your own infrastructure.
 
+![Infrastructure Diagram](./infrastructure-diagram.png)
+
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
