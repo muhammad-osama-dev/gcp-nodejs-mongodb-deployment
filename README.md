@@ -173,7 +173,7 @@ We welcome contributions from the community! If you'd like to contribute to this
 3. Test your changes to avoid introducing new issues.
 4. Submit a pull request (PR) with a clear description of your changes.
 
-We appreciate your contributions and will review PRs promptly. If you have questions or need assistance, please open an issue or contact us at [contact@example.com](mailto:contact@example.com).
+We appreciate your contributions and will review PRs promptly. If you have questions or need assistance, please open an issue or contact us at [contact@example.com](mailto:mohamedelshfei@gmail.com).
 
 By contributing to this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
