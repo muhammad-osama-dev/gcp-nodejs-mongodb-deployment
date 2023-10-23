@@ -9,6 +9,7 @@ This project demonstrates how to create a robust infrastructure on Google Cloud 
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+- [Cleanup](#cleanup)
 
 ## Prerequisites
 
@@ -140,5 +141,22 @@ watch kubectl get svc -n staging
 if it's pending wait a bit for it to accuire the ip
 
 you are good to go Happy devopsing :)
+
+
+## Cleanup
+To delete the resources and clean up your GCP project:
+
+Run the following Terraform command to destroy the infrastructure:
+```bash
+terraform destroy
+```
+When prompted, confirm that you want to destroy the resources.
+This will remove all the resources created by Terraform. Be cautious, as this action is irreversible.
+
+Optionally, delete the service account and associated key, if no longer needed:
+```bash
+gcloud iam service-accounts delete SERVICE_ACCOUNT_EMAIL
+```
+Don't forget to delete the GCP project if you created a separate one for this project.
 
 
