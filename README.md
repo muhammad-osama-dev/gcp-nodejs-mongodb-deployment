@@ -9,9 +9,9 @@ This project demonstrates how to create a robust infrastructure on Google Cloud 
 - [Getting Started](#getting-started)
   - [Terraform Modules](#terraform-modules)
 - [Usage](#usage)
+- [Cleanup](#cleanup)
 - [Contributing](#contributing)
 - [License](#license)
-- [Cleanup](#cleanup)
 
 ## Prerequisites
 
