@@ -1,6 +1,3 @@
 *.terraform*
-terraform.tfstate
-terraform.tfstate.backup
-itisv-401212-d51ce4e7851a.json
 important_rules
 halogen-data-401020-3595191beb5f.json
