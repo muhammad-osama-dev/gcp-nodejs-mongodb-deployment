@@ -80,5 +80,65 @@ these are the default vales if you changed the variables adjust according to tha
 ```bash
 watch cat /tracker.txt
 ```
+wait till it looks something like that
+
+```bash
+Installing Docker ...
+Pulling app image ...
+Image Pulled ...
+Image Pushed
+Pulling mognodb image ...
+Pulled mognodb image ...
+Pushing mognodb image ...
+Image Pushed ...
+kubectl installed ...
+google auth ...
+tiny proxy installed ...
+service restarted auth ...
+```
+
+your infrastructure is up 
+
+now we should be able to proxy to the managment vm and apply the kubernetes manifests
+
+to use the vm as a proxy on your local machine
+
+```bash
+gcloud container clusters get-credentials gke-cluster --zone=us-central1 --project halogen-data-401020 --internal-ip
+gcloud compute ssh my-private-instance \
+    --tunnel-through-iap \
+    --project=halogen-data-401020 \
+    --zone=us-east1-b \
+    --ssh-flag="-4 -L8888:localhost:8888 -N -q -f"
+export HTTPS_PROXY=localhost:8888
+```
+try
+
+```bash
+kubectl get ns 
+```
+if it shows your namespaces then you are good to go 
+
+applying kubernetes manifests
+
+```bash
+kubectl get nodes 
+kubectl get apply ./kubernetes/mongodb
+kubectl get apply ./kubernetes/app_deployment 
+```
+to see the pods deployed
+
+```bash
+kubectl get po -n staging  
+kubectl get po -n database  
+```
+getting service ip to access the application 
+
+```bash
+watch kubectl get svc -n staging  
+```
+if it's pending wait a bit for it to accuire the ip
+
+you are good to go Happy devopsing :)
 
 
