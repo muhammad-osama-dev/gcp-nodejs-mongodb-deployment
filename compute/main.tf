@@ -1,3 +1,16 @@
+data "template_file" "startup_script" {
+  template = file("./compute/startup-private-vm.sh")
+
+  vars = {
+    VAR1_project_id = var.project_id
+    VAR2_repo_id = var.repo_id
+    VAR4_cluster_name = var.gke_name
+    VAR3_cluster_region = var.region1
+
+  }
+}
+
+
 resource "google_compute_instance" "my-private-vm" {
   name         = var.vm_name
   machine_type = var.vm_type
@@ -19,20 +32,16 @@ resource "google_compute_instance" "my-private-vm" {
     
   }
 
-  # metadata = {
-  #   startup_script = "./startup-private-vm.sh"
-  # }
-
    metadata = {
     "sa_key" = var.sa_key
-    # Add metadata key to allow full access to all Cloud APIs
-   
+
   }
 
-  metadata_startup_script = file("./compute/startup-private-vm.sh")
+  metadata_startup_script = data.template_file.startup_script.rendered
+
+  # metadata_startup_script = file("./compute/startup-private-vm.sh")
 
   service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     email  = var.sa_email
     scopes = ["cloud-platform"]
   }
@@ -50,7 +59,7 @@ resource "google_service_account" "kubernetes" {
 }
 
 resource "google_project_iam_member" "artifact_registry_reader" {
-  project = "halogen-data-401020"
+  project = var.project_id
   role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.kubernetes.email}"
 }
@@ -70,7 +79,7 @@ resource "google_container_cluster" "privatecluster"{
 
   master_authorized_networks_config {
     cidr_blocks {
-        cidr_block = "0.0.0.0/0"
+        cidr_block = var.private_ip_cidr_range
         display_name = "vm"
     }
   }

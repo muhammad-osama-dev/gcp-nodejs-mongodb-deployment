@@ -16,6 +16,9 @@ module "network" {
 
 module "compute" {
     source = "./compute"
+    project_id = var.project_id
+    private_ip_cidr_range = var.private_ip_cidr_range
+    repo_id = var.repo_id
     vm_name = var.vm_name
     vm_type = var.vm_type
     vm_zone = var.vm_zone

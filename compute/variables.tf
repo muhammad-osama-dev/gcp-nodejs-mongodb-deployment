@@ -1,3 +1,6 @@
+variable "project_id" {
+  type = string
+}
 variable "vm_name" {
     type = string 
 }
@@ -40,7 +43,9 @@ variable "sa_key" {
   type = string
 }
 
-
+variable "private_ip_cidr_range" {
+  type = string
+}
 
 
 ### GKE
@@ -50,5 +55,9 @@ variable "gke_name" {
 }
 
 variable "region1" {
+  type = string
+}
+
+variable "repo_id" {
   type = string
 }
