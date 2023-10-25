@@ -70,6 +70,7 @@ make sure you are in gcp-nodejs-mongodb-deployment directory
 apply infrastructure using terraform
 
 ```bash
+terraform init
 terraform apply 
 ```
 takes around 20-40m to apply so play chess game or something 
