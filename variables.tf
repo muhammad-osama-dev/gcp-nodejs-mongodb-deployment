@@ -67,3 +67,4 @@ variable "repo_desc" {
   type = string
   default = "docker repository"
 }
+
