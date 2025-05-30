@@ -29,26 +29,6 @@ cat key.json | sudo docker login -u _json_key_base64 --password-stdin https://us
 cd /
 
 
-################ App Image ###################
-echo "Pulling app image ..." >> tracker.txt
-sudo docker pull moelshafei/nodeapp:latest
-echo "Image Pulled ..." >> tracker.txt
-sudo docker tag moelshafei/nodeapp:latest us-east1-docker.pkg.dev/${VAR1_project_id}/${VAR2_repo_id}/app:latest
-sudo docker push us-east1-docker.pkg.dev/${VAR1_project_id}/${VAR2_repo_id}/app:latest
-echo "Image Pushed" >> tracker.txt
-
-
-############# MongoDB Image ####################
-echo "Pulling mognodb image ..." >> tracker.txt
-sudo docker pull bitnami/mongodb:4.4.4
-echo "Pulled mognodb image ..." >> tracker.txt
-sudo docker tag bitnami/mongodb:4.4.4 us-east1-docker.pkg.dev/${VAR1_project_id}/${VAR2_repo_id}/mongodb:latest
-echo "Pushing mognodb image ..." >> tracker.txt
-sudo docker push us-east1-docker.pkg.dev/${VAR1_project_id}/${VAR2_repo_id}/mongodb:latest
-echo "Image Pushed ..." >> tracker.txt
-
-
-
 
 ###### For proxy ################
 sudo apt-get install kubectl
@@ -66,22 +46,39 @@ echo "service restarted auth ..." >> tracker.txt
 exit
 
 
-# You can use that if you want to pull kubernetes files and apply them automatically (not secure) 
-############ cloning the kubernetes files ############
-# cd /
-# sudo apt-get install git-all
-# git clone https://github.com/muhammad-osama-dev/gcp-nodejs-mongodb-deployment.git
-# cd /gcp-nodejs-mongodb-deployment
-# sudo apt-get install kubectl
-# echo "kubectl installed ..." >> tracker.txt
-# sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
-# echo "google auth ..." >> tracker.txt
-# export KUBECONFIG=$HOME/.kube/config
-# gcloud container clusters get-credentials gke-cluster --zone=us-central1 > output.txt 2>&1
-# echo "cluster auth ..." >> tracker.txt
-# kubectl apply -f ./kubernetes/mongodb/
-# echo "mongodb deployed ..." >> tracker.txt
-# kubectl apply -f ./kubernetes/app_deployment/
-# echo "app deployed ..." >> tracker.txt
+
+# setup github actions runner
+
+useradd -m -s /bin/bash github-runner
+
+
+GITHUB_PAT=$(gcloud secrets versions access latest --secret=github-pat)
+GITHUB_ORG="muhammad-osama-dev"
+GITHUB_REPO="gcp-nodejs-mongodb-deployment"  
+RUNNER_VERSION="2.324.0"
+RUNNER_DIR="/home/github-runner/actions-runner"
+
+echo $GITHUB_PAT >> tracker.txt
+echo "Installing GitHub Actions Runner ..." >> tracker.txt
+
+
+TOKEN=$(curl -s -X POST -H "Authorization: token $GITHUB_PAT" "https://api.github.com/repos/$GITHUB_ORG/$GITHUB_REPO/actions/runners/registration-token" | jq -r '.token')
+
+sudo -u github-runner bash <<EOF
+set -e
+mkdir -p $RUNNER_DIR
+cd $RUNNER_DIR
+
+# Download and extract
+curl -o actions-runner-linux-x64-2.324.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.324.0/actions-runner-linux-x64-2.324.0.tar.gz
+tar xzf actions-runner-linux-x64-2.324.0.tar.gz
+
+# Configure and start
+./config.sh --url https://github.com/$GITHUB_ORG/$GITHUB_REPO --token $TOKEN --unattended
+nohup ./run.sh > runner.log 2>&1 &
+EOF
+
+echo "GitHub runner setup complete." >> /var/log/startup-script.log
+
 EOF
 
