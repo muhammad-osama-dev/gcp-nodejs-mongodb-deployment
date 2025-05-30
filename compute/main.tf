@@ -21,7 +21,7 @@ resource "google_compute_instance" "my-private-vm" {
   boot_disk {
      initialize_params {
       image = var.vm_image
-      size = 10
+      size = 
     }
   }
 
@@ -124,7 +124,5 @@ resource "google_container_node_pool" "privatecluster-node-pool" {
   }
   node_locations = [
     "${var.region1}-a",
-    "${var.region1}-b",
-    "${var.region1}-c"
   ]
 }
