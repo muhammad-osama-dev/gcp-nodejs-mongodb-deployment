@@ -27,3 +27,18 @@ resource "google_compute_firewall" "allow-iap" {
   }
 }
 
+resource "google_compute_firewall" "allow-http" {
+  name    = "allow-http"
+  network = google_compute_network.vpc.name
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["private-subnet"]
+  direction     = "INGRESS"
+  priority      = 1001
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+}
+

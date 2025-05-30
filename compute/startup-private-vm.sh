@@ -43,7 +43,7 @@ echo "tiny proxy installed ..." >> tracker.txt
 sudo sh -c "echo 'Allow localhost' >> /etc/tinyproxy/tinyproxy.conf"
 sudo service tinyproxy restart
 echo "service restarted auth ..." >> tracker.txt
-exit
+
 
 
 
@@ -54,7 +54,7 @@ useradd -m -s /bin/bash github-runner
 
 GITHUB_PAT=$(gcloud secrets versions access latest --secret=github-pat)
 GITHUB_ORG="muhammad-osama-dev"
-GITHUB_REPO="gcp-nodejs-mongodb-deployment"  
+GITHUB_REPO="ci-cd-nodejs"  
 RUNNER_VERSION="2.324.0"
 RUNNER_DIR="/home/github-runner/actions-runner"
 
@@ -78,7 +78,6 @@ tar xzf actions-runner-linux-x64-2.324.0.tar.gz
 nohup ./run.sh > runner.log 2>&1 &
 EOF
 
+
+
 echo "GitHub runner setup complete." >> /var/log/startup-script.log
-
-EOF
-

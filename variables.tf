@@ -44,7 +44,7 @@ variable "vm_zone" {
 
 variable "vm_image" {
   type        = string
-  default     = "debian-cloud/debian-10"
+  default     = "debian-cloud/debian-11"
 }
 
 variable "labels_tags" {

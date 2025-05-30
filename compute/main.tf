@@ -21,7 +21,7 @@ resource "google_compute_instance" "my-private-vm" {
   boot_disk {
      initialize_params {
       image = var.vm_image
-      size = 
+      size = 10
     }
   }
 

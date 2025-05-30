@@ -1,4 +1,4 @@
-project_id = "halogen-data-401020"
+project_id = "task-nawy"
 region1 = "us-central1"
 region2 = "us-east1"
 vpc_name = "project"
@@ -11,7 +11,7 @@ private_ip_cidr_range = "10.10.20.0/24"
 vm_name = "my-private-instance"
 vm_type = "e2-micro"
 vm_zone = "us-east1-b"
-vm_image = "debian-cloud/debian-10"
+vm_image = "debian-cloud/debian-11"
 labels_tags = [ "private-subnet" ]
 
 
