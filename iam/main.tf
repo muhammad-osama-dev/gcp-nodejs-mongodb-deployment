@@ -24,3 +24,10 @@ resource "google_project_iam_member" "sa_reader" {
   role    = "roles/artifactregistry.reader"  # This grants full control of Kubernetes Engine resources
   member  = "serviceAccount:${google_service_account.sa.email}"
 }
+
+
+resource "google_project_iam_member" "secret_manager_accessor" {
+  project = var.project_id
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "serviceAccount:${google_service_account.sa.email}"
+}
